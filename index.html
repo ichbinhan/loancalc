@@ -15,7 +15,7 @@
         <input type="radio" id="interest" name="repayment">本息攤還
         <br>
         <label for="loanAmount">貸款金額:</label>
-        <input type="number" id="loanAmount" placeholder="請輸入金額">&nbsp;萬
+        <input type="number" id="loanAmount" placeholder="請輸入金額" value="10">&nbsp;萬
         <br>
         <label for="interestRate">貸款利率:</label>
         <input type="number" id="interestRate" step="0.1" value="3.5">&nbsp;%
@@ -40,12 +40,31 @@
 
 
         function roanCalc() {
-            let loanAmount = loanAmountE1.value;
+            let loanAmount = loanAmountE1.value * 10000;
             let interestRate = interestRateE1.value;
             let loanYear = loanYearE1.value;
 
             let principal = principalE1.checked;
             console.log(loanAmount, interestRate, loanYear);
+
+            let amount = loanAmount
+            let months = loanYear * 12
+            let monthRate = interestRate / 100 / 12
+            //固定還款金額
+            monthPay = parseInt(amount / months);
+            //期數
+            for (let i = 0; i < months; i++) {
+                //計算每月利息   
+                let interest = Math.round(amount * monthRate);
+                amount -= monthPay;
+                //最後一期
+                if (i == months - 1) {
+                    console.log(`期別:${i + 1} 本金:${monthPay + amount} 利息:${interest} 本利和:${monthPay + interest + amount} 餘額:0`);
+                }
+                else {
+                    console.log(`期別:${i + 1} 本金:${monthPay} 利息:${interest} 本利和:${monthPay + interest} 餘額:${amount}`);
+                }
+            }
 
         }
 
