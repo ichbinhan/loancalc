@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>貸款利息計算</title>
+</head>
+
+<body>
+    <h1>貸款利息計算器</h1>
+    <form>
+        <label for="">計算方式</label>
+        <input type="radio" id="principal" name="repayment" checked>本金攤還
+        <input type="radio" id="interest" name="repayment">本息攤還
+        <br>
+        <label for="loanAmount">貸款金額:</label>
+        <input type="number" id="loanAmount" placeholder="請輸入金額">&nbsp;萬
+        <br>
+        <label for="interestRate">貸款利率:</label>
+        <input type="number" id="interestRate" step="0.1" value="3.5">&nbsp;%
+        <br>
+        <label for="loanYear">貸款年數:</label>
+        <select name="loanYear" id="loanYear">
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="7" selected>7</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+        </select>&nbsp;年
+        <br>
+        <input type="button" value="計算" onclick="roanCalc()">
+    </form>
+
+    <script>
+        const loanAmountE1 = document.querySelector("#loanAmount")
+        const interestRateE1 = document.querySelector("#interestRate")
+        const loanYearE1 = document.querySelector("#loanYear")
+        const principalE1 = document.querySelector("#principal")
+
+
+        function roanCalc() {
+            let loanAmount = loanAmountE1.value;
+            let interestRate = interestRateE1.value;
+            let loanYear = loanYearE1.value;
+
+            let principal = principalE1.checked;
+            console.log(loanAmount, interestRate, loanYear);
+
+        }
+
+
+
+
+
+
+    </script>
+
+</body>
+
+
+
+</html>
