@@ -17,151 +17,75 @@
 <body>
     <section class="hero is-info is-fullheight">
         <div class="hero-body">
-            <div class="container has-text-centered">
-                <p class="title">
+            <div class="container has-text-centered is-1">
+                <p class="title is-size-1">
                     貸款利息計算器
                 </p>
-                <form class="box has-background-warning">
-                    <div class="field box has-background-link has-text-white">
-                        <label class="label is-size-4 has-text-white">計算方式</label>
-                        <div class="control">
-                            <input type="radio" id="principal" name="repayment" checked>本金攤還
-                            <input type="radio" id="interest" name="repayment">本息攤還
-                        </div>
+                <p class="subtitle">
+                    &copy;2023 Han
+                </p>
+                <div class="columns is-centered">
+                    <div class="column is-6">
+                        <form class="box has-background-warning">
+                            <div class="field box has-background-link has-text-white">
+                                <label class="label is-size-3 has-text-white">計算方式</label>
+                                <div class="control">
+                                    <input type="radio" id="principal" name="repayment" checked>本金攤還
+                                    <input type="radio" id="interest" name="repayment">本息攤還
+                                </div>
+                            </div>
+                            <div class="field m-3">
+                                <label class="label is-size-4" for="loanAmount">貸款金額(萬):</label>
+                                <input class="input" type="number" id="loanAmount" placeholder="請輸入金額" value="10">
+
+                            </div>
+                            <div class="field m-3">
+                                <label class="label is-size-4" for="interestRate">貸款利率(%):</label>
+                                <input class="input" type="number" id="interestRate" step="0.1" value="3.5">
+                            </div>
+                            <div class="field m-3">
+                                <label class="label is-size-4" for="loanYear">貸款年數:</label>
+                                <select class="select is-fullwidth has-text-centered is-size-6" name="loanYear"
+                                    id="loanYear">
+                                    <option value="3">3</option>
+                                    <option value="5">5</option>
+                                    <option value="7" selected>7</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                </select>
+
+                            </div>
+                            <input class="button has-background-danger has-text-white" type="button" value="計算"
+                                onclick="roanCalc()">
+                            <input class="button has-background-primary has-text-white" type="reset" value="重置">
+                        </form>
                     </div>
-                    <div class="field">
-                        <label class="label" for="loanAmount">貸款金額(萬):</label>
-                        <input class="input" type="number" id="loanAmount" placeholder="請輸入金額" value="10">
-
+                </div>
+                <div id="result" class="box is-size-5 has-background-danger-light has-text-dark">
+                </div>
+                <div class="columns is-centered">
+                    <div class="column is-10">
+                        <table id="resultTable" class="table is-fullwidth is-bordered is-striped is-hoverable" hidden>
+                            <thead>
+                                <tr class="has-background-link">
+                                    <th>期別</th>
+                                    <th>本金</th>
+                                    <th>利息</th>
+                                    <th>本利和</th>
+                                    <th>餘額</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="field">
-                        <label class="label" for="interestRate">貸款利率(%):</label>
-                        <input class="input" type="number" id="interestRate" step="0.1" value="3.5">
-                    </div>
-                    <div class="field">
-                        <label class="label" for="loanYear">貸款年數:</label>
-                        <select class="select" name="loanYear" id="loanYear">
-                            <option value="3">3</option>
-                            <option value="5">5</option>
-                            <option value="7" selected>7</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                        </select>&nbsp;年
-
-                    </div>
-                    <input class="button has-background-danger has-text-white" type="button" value="計算"
-                        onclick="roanCalc()">
-                </form>
-
-                <div id="result"></div>
-                <table id="resultTable" border="1" hidden>
-                    <thead>
-                        <tr>
-                            <th>期別</th>
-                            <th>本金</th>
-                            <th>利息</th>
-                            <th>本利和</th>
-                            <th>餘額</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-
-
-                    </tbody>
-                </table>
-
+                </div>
+                <a href="" class="button has-background-primary">TOP</a>
             </div>
-
         </div>
     </section>
-
-
-
-
-    <script>
-        const loanAmountE1 = document.querySelector("#loanAmount");
-        const interestRateE1 = document.querySelector("#interestRate");
-        const loanYearE1 = document.querySelector("#loanYear");
-        const principalE1 = document.querySelector("#principal");
-        const resultE1 = document.querySelector("#result");
-        const tableTbodyE1 = document.querySelector("#resultTable>tbody");
-
-        function roanCalc() {
-            let loanAmount = loanAmountE1.value * 10000;
-            let interestRate = interestRateE1.value;
-            let loanYear = loanYearE1.value;
-
-            let principal = principalE1.checked;
-            console.log(loanAmount, interestRate, loanYear);
-
-            let amount = loanAmount
-            let months = loanYear * 12
-            let monthRate = interestRate / 100 / 12
-            //固定還款金額
-            let monthPay = parseInt(amount / months);
-
-            let resultPayment = [];
-
-            //let liText = "";
-            //跑動期數
-
-            for (let i = 0; i < months; i++) {
-                //計算每月利息   
-                let interest = Math.round(amount * monthRate);
-                amount -= monthPay;
-                //最後一期
-                let liText = "";
-                if (i == months - 1) {
-                    resultPayment.push([i + 1, monthPay + amount, interest, monthPay + interest + amount, 0]);
-                    //text = (`期別:${i + 1} 本金:${monthPay + amount} 利息:${interest} 本利和:${monthPay + interest + amount} 餘額:0`);
-                }
-                else {
-                    resultPayment.push([i + 1, monthPay, interest, monthPay + interest, amount]);
-                    //text = (`期別:${i + 1} 本金:${monthPay} 利息:${interest} 本利和:${monthPay + interest} 餘額:${amount}`);
-                }
-                //liText += `<li>${text}`;
-                //console.log(text)
-
-
-                let totalInterest = 0;
-                for (let i = 0; i < resultPayment.length; i++) {
-                    totalInterest += resultPayment[i][2];
-                }
-                resultE1.innerHTML = `總期數:${resultPayment.length} 總利息支出:${totalInterest} 總還款金額:${totalInterest + loanAmount}`;
-                drawTable(resultPayment);
-
-            }
-            //繪製表格
-            function drawTable(resultPayment) {
-                //console.log(tableTbodyE1, resultPayment);
-                let tableHtml = "";
-                for (let i = 0; i < resultPayment.length; i++) {
-                    tableHtml += "<tr>";
-                    for (let j = 0; j < resultPayment[i].length; j++) {
-                        tableHtml += `<td>${resultPayment[i][j]}</td>`;
-                    }
-                    tableHtml += "</tr>";
-                }
-                if (tableHtml != "") {
-                    document.querySelector("#resultTable").style.display = "table";
-                }
-
-                tableTbodyE1.innerHTML = tableHtml;
-
-            }
-
-        }
-
-
-
-
-
-
-    </script>
+    <script src="index.js"></script>
 
 </body>
-
-
 
 </html>
