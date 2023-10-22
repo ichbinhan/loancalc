@@ -1,6 +1,6 @@
 body {
     text-align: center;
-    background-color: #cfcac8;
+    background-color: #f4f3f3;
     font-family: '微軟正黑體', Courier, monospace;
     font-size: 20px;
 }
@@ -28,16 +28,18 @@ input[type="button"] {
 
 #result {
     display: block;
-    background-color: goldenrod;
-    padding: 6px 0px;
+    background-color: #3a2529;
+    color: azure;
+    padding: 10px 0px;
     font-weight: bold;
 
 }
 
 #resultTable {
     width: 80%;
-    margin: 0 auto;
+    margin: 2px auto;
     border-collapse: collapse;
+    font-size: 16px;
 
 }
 
